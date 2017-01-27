@@ -1,0 +1,20 @@
+{
+    "name": "lyoshenka/shell",
+    "description": "A better way to call shell commands",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alex Grintsvayg",
+            "email": "alex@grin.io"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "psr-4": {
+              "lyoshenka\\": "src/"
+        }
+    }
+}
