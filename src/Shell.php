@@ -26,6 +26,10 @@ class Shell
    *                         default to the value of 'echo'
    *                         - live_callback (callable) - Will be called as soon as data is read. Use this for custom handling
    *                         of live output. Callable signature: fn(string $text, bool $isError)
+   *                         - cwd (string) - The initial working dir for the command. Must be an absolute path, or null to default to
+   *                         the working dir of the current PHP process.
+   *                         - env (array) - Array of environment variables for the command, or null to default to the same environment
+   *                         as the current PHP process.
    *
    * @return array [exit code, output, errorOutput]
    */
@@ -35,6 +39,8 @@ class Shell
       'echo'          => false,
       'echo_errors'   => null,
       'live_callback' => null,
+      'cwd'           => null,
+      'env'           => null,
     ], $options);
 
     if ($options['echo_errors'] === null)
@@ -52,7 +58,7 @@ class Shell
       2 => ['pipe', 'w'], // stderr
     ];
 
-    $process = proc_open($cmd, $descriptorSpec, $pipes);
+    $process = proc_open($cmd, $descriptorSpec, $pipes, $options['cwd'], $options['env']);
     if (!is_resource($process))
     {
       throw new RuntimeException('proc_open failed');
